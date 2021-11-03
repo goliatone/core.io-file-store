@@ -1,10 +1,8 @@
-/*jshint esversion:6, node:true*/
-'use strict';
+module.exports.VolumeManager = require('./lib/volumemanager');
 
-/*
- * Default initializer for the module.
- *
- * You can always override this and make
- * a custom initializer.
- */
-module.exports.init = require('./lib/init');
+module.exports.drivers = {
+    fs: require('./lib/drivers/fs'),
+    s3: require('./lib/drivers/s3'),
+};
+
+module.exports.init = require('./init');

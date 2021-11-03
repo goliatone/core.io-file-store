@@ -1,7 +1,5 @@
 ## File Store
 
-
-
 This package provides a module for the [core.io](https://npmjs.com/package/core.io) library.
 
 ### Install
