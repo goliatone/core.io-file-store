@@ -5,4 +5,4 @@ module.exports.drivers = {
     s3: require('./lib/drivers/s3'),
 };
 
-module.exports.init = require('./init');
+module.exports.init = require('./lib/init');
