@@ -1,3 +1,4 @@
+const fs = require('fs-extra');
 const { VolumeManager } = require('..');
 const manager = new VolumeManager();
 // manager.addVolume('upload', manager.volumeDefinitions.get('s3'));
@@ -7,18 +8,27 @@ const volume = manager.getVolume('upload');
 
 (async() => {
     try {
+        let fixture = {
+            path: 'testing.text',
+            content: 'This is a text and nothing more'
+        }
         let response;
 
-        response = await volume.write('testing.txt', 'This is a text and nothing more');
+        response = await volume.write(fixture.path, fixture.content);
         console.log(response)
+
         response = await volume.exists('testing.txt');
         console.log(response);
+
         response = await volume.read('testing.txt');
         console.log(response);
+
         response = await volume.copy('testing.txt', 'testing-copy.txt');
         console.log(response);
+
         response = await volume.read('testing-copy.txt');
         console.log(response);
+
         response = await volume.move('testing-copy.txt', 'retesting.txt');
         console.log(response);
 
