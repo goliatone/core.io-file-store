@@ -9,22 +9,17 @@ const AWSMock = require('mock-aws-s3');
 // Can configure a basePath for your local buckets
 AWSMock.config.basePath = '/tmp/buckets';
 
-
+const file = {
+    name: 'testing.tx',
+    content: 'This is a text and nothing more'
+};
 
 test('VolumeManager: should have s3 volume', t => {
-
     const manager = new VolumeManager();
     const volume = manager.getVolume('s3');
     t.ok(volume, 's3');
     t.end();
 });
-
-
-
-const file = {
-    name: 'testing.tx',
-    content: 'This is a text and nothing more'
-}
 
 test('VolumeManager: write', async t => {
     const manager = new VolumeManager({
@@ -130,7 +125,6 @@ test('VolumeManager: copy', async t => {
     t.ok(response.raw);
     t.end();
 });
-
 
 test('VolumeManager: move', async t => {
     const manager = new VolumeManager({
