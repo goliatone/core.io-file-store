@@ -6,7 +6,7 @@ PATH=./node_modules/.bin:$PATH
 ##########################################
 
 function test:ci {
-    tape ./tests/*.test.js
+    tape ./tests/*test.js
 }
 
 function test:dev {
@@ -28,7 +28,7 @@ function test:cover {
 function _publish:check {
     if output=$(git status --untracked-files=no --porcelain) && [ -z "$output" ]; then
         # Working directory clean
-        echo "Ready to publish..."    
+        echo "Ready to publish..."
     else
         red=`tput setaf 1`
         reset=`tput sgr0`
@@ -60,4 +60,4 @@ function help {
 }
 
 TIMEFORMAT="Task completed in %3lR"
-time ${@:-help}  
+time ${@:-help}

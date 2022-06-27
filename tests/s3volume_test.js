@@ -99,6 +99,36 @@ test('VolumeManager: read', async t => {
     t.end();
 });
 
+test.only('VolumeManager: read', async t => {
+    const manager = new VolumeManager({
+        volumeDefinitions: {
+            s3: {
+                protocol: 's3',
+                config: {
+                    root: '/s3',
+                    bucket: 'write',
+                    clientFactory(config) {
+                        return AWSMock.S3({
+                            params: { Bucket: 'write' }
+                        });
+                    }
+                }
+            }
+        }
+    });
+
+    const volume = manager.getVolume('s3');
+
+    await volume.write(file.name, file.content);
+
+    let response = await volume.read(file.name, { asBuffer: true });
+
+    t.ok(response.content instanceof fs.ReadStream);
+    t.ok(response.raw);
+    t.end();
+});
+
+
 
 test('VolumeManager: copy', async t => {
     const manager = new VolumeManager({
