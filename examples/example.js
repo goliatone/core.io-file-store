@@ -29,6 +29,9 @@ const volume = manager.getVolume('upload');
         response = await volume.read('testing-copy.txt');
         console.log(response);
 
+        response = await volume.read('testing-copy.txt', { asBuffer: true });
+        writeAsStream(response, 'testing-stream.txt');
+
         response = await volume.move('testing-copy.txt', 'retesting.txt');
         console.log(response);
 
@@ -44,6 +47,18 @@ const volume = manager.getVolume('upload');
         console.log(error);
     }
 })();
+
+function writeAsStream(response, filepath) {
+    return new Promise((resolve, reject) => {
+        let stream = fs.createWriteStream(filepath);
+        stream.write(response.content);
+        stream.on('end', _ => {
+            stream.end();
+            resolve();
+        });
+        stream.on('error', reject);
+    });
+}
 
 // let params = {
 //     "Bucket": bucket,
